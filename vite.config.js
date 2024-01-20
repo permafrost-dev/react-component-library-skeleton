@@ -18,15 +18,15 @@ export default defineConfig({
     ],
     build: {
         lib: {
-
             name: '{package.name}',
-            entry: ['src/index.ts'],
+            entry: ['src/index.tsx'],
             formats: ['es', 'cjs'],
 
         },
         rollupOptions: {
             external: ['react', 'react-dom'],
         },
+        cssMinify: 'lightningcss',
     },
     cacheDir: resolvePath('.cache'),
     resolve: {

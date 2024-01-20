@@ -7,9 +7,9 @@ module.exports = {
         sourceType: 'module',
     },
     env: {
-        browser: false,
+        browser: true,
         commonjs: true,
-        jest: false,
+        jest: true,
         node: true,
         es2022: true,
     },
