@@ -1,0 +1,73 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+
+env:
+  USE_CODECOV_SERVICE: yes
+  JS_COVERAGE_FILE: 'coverage/coverage-final.json'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Run the tests with coverage
+        run: bun run test
+
+      - name: check for coverage file
+        id: check-coverage-file
+        run: |
+          if [ ! -f ${{ env.JS_COVERAGE_FILE }} ]; then
+            echo "HAS_COVERAGE_FILE=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "HAS_COVERAGE_FILE=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check if codecov is enabled for this repository and a valid token is set
+        id: check-codecov
+        run: |
+          if [ -z "${{ secrets.CODECOV_TOKEN }}" ]; then
+            echo "USE_CODECOV_SERVICE=no" >> "$GITHUB_OUTPUT"
+            echo "CODECOV_SERVICE_ENABLED=no" >> "$GITHUB_OUTPUT"
+            exit 0
+          if
+
+          if [ "${{ env. USE_CODECOV_SERVICE }}" != "yes" ]; then
+            echo "CODECOV_SERVICE_ENABLED=no" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "${{ steps.check-coverage-file.outputs.HAS_COVERAGE_FILE }}" != "yes" ]; then
+            echo "CODECOV_SERVICE_ENABLED=no" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          CODECOV_SERVICE_ENABLED=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "/repos/$GITHUB_REPOSITORY/properties/values" | \
+            jq ' .[] | select(.property_name == "workflow_enable_service_codecov").value' -Mr)
+
+          echo "CODECOV_SERVICE_ENABLED=$CODECOV_SERVICE_ENABLED" >> "$GITHUB_OUTPUT"
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4-beta
+        if: ${{ steps.check-codecov.outputs.CODECOV_SERVICE_ENABLED == 'yes' }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ${{ env.JS_COVERAGE_FILE }}

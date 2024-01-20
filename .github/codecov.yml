@@ -1,0 +1,34 @@
+codecov:
+  branch: main
+  require_ci_to_pass: yes
+
+coverage:
+  status:
+    project:
+      default:
+        informational: true
+        target: auto
+        threshold: 20%
+    patch:
+      default:
+        informational: true
+  precision: 2
+  round: up
+  range: '40...80'
+
+parsers:
+  javascript:
+    enable_partials: yes
+
+comment:
+  layout: 'reach,diff,flags,files,footer'
+  behavior: default
+  require_changes: true
+
+ignore:
+  - 'build/'
+  - 'dist/'
+  - '.eslintrc.cjs'
+  - 'jest.config.js'
+  - 'prettier.config.cjs'
+  - 'vite.config.js'
