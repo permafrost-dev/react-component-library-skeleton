@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
+const fs = require('node:fs');
+const path = require('node:path');
+const readline = require('node:readline');
 
 function processFilesInDirectory(directory, userData) {
     fs.readdirSync(directory).forEach(file => {
@@ -15,14 +15,13 @@ function processFilesInDirectory(directory, userData) {
         if (excludedFolders.some(folder => file.includes(folder))) return;
         if (excludedFiles.some(excludedFile => file.includes(excludedFile))) return;
 
-
-        if (['.ts', '.js', '.mjs', '.cjs', '.tsx', '.jsx', 'json', 'md', 'yaml', 'yml'].includes(ext)) {
+        if (['.ts', '.js', '.mjs', '.cjs', '.tsx', '.jsx', '.json', '.md', '.yaml', '.yml'].includes(ext)) {
             if (stat.isDirectory()) {
                 processFilesInDirectory(filePath, userData); // Recursively process subdirectories
             } else {
                 console.log(`Processing ${filePath.replace(__dirname, '.')}...`);
 
-                const placeholders = Object.keys(userData).map(v => `{{${v}}}`);
+                const placeholders = Object.keys(userData).map(v => `{${v}}`);
 
                 let content = fs.readFileSync(filePath, 'utf-8');
                 for (const placeholder of placeholders) {
@@ -38,7 +37,7 @@ function processFilesInDirectory(directory, userData) {
 }
 
 
-function promptUserForData(prompts) {
+async function promptUserForData(prompts) {
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
@@ -46,33 +45,34 @@ function promptUserForData(prompts) {
 
     const result = new Promise(resolve => {
         const userData = {};
-        const promptUser = index => {
+        const promptUser = async index => {
             if (index === Object.keys(prompts).length) {
                 rl.close();
                 resolve(userData);
                 return;
             }
-            rl.question(Object.values(prompts)[index], answer => {
+            await rl.question(Object.values(prompts)[index], async answer => {
                 userData[Object.keys(prompts)[index]] = answer;
-                promptUser(index + 1);
+                await promptUser(index + 1);
             });
         };
         promptUser(0);
     });
 
-    rl.close();
     return result;
 }
 
-async function main() {
-    const userData = await promptUserForData({
-        'user.name': 'Enter your name: ',
+function main() {
+    promptUserForData({
+        'author.name': 'Enter your name: ',
         'user.email': 'Enter your email address: ',
         'user.github': 'Enter your GitHub username: ',
-        'user.company': 'Enter your company/vendor name: ',
+        'vendor.name': 'Enter your company/vendor name: ',
+        'package.name': 'Enter the package name: ',
+        'package.description': 'Enter the package description: ',
+    }).then(userData => {
+        processFilesInDirectory(__dirname, userData);
     });
-
-    processFilesInDirectory(__dirname, userData);
 }
 
 main();
