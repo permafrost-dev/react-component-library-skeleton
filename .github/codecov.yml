@@ -1,6 +1,6 @@
 codecov:
   branch: main
-  require_ci_to_pass: yes
+  require_ci_to_pass: true
 
 coverage:
   status:
@@ -28,7 +28,9 @@ comment:
 ignore:
   - 'build/'
   - 'dist/'
+  - 'scripts/'
   - '.eslintrc.cjs'
-  - 'jest.config.js'
+  - 'jest.config.cjs'
   - 'prettier.config.cjs'
+  - 'stylelint.config.mjs'
   - 'vite.config.js'
