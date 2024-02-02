@@ -2,7 +2,7 @@ import { generateDtsBundle } from 'dts-bundle-generator';
 import { writeFileSync } from 'fs';
 
 const dts = generateDtsBundle([{
-    filePath: 'src/index.ts',
+    filePath: 'src/index.tsx',
 }]).pop()
     .replaceAll('export {};', '')
     .replaceAll(/\n{2,}/g, '\n')

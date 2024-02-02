@@ -1,99 +1,99 @@
 {
-  "name": "react-component-library",
-  "version": "1.0.0",
-  "author": "{author.name}",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/{vendor.name}/{package.name}.git"
-  },
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "devDependencies": {
-    "@biomejs/biome": "^1.5.3",
-    "@happy-dom/jest-environment": "^13.3.8",
-    "@testing-library/jest-dom": "^6.4.1",
-    "@testing-library/react": "^14.2.1",
-    "@types/jest": "^29.5.12",
-    "@types/node": "^20.11.16",
-    "@types/react": "^18.2.51",
-    "@types/react-dom": "^18.2.18",
-    "@typescript-eslint/eslint-plugin": "^6.20.0",
-    "@typescript-eslint/parser": "^6.20.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "auto-changelog": "^2.4.0",
-    "dts-bundle-generator": "^9.2.5",
-    "eslint": "^8.56.0",
-    "eslint-plugin-jest": "^27.6.3",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-react": "^7.33.2",
-    "happy-dom": "^13.3.8",
-    "husky": "^9.0.10",
-    "jest": "^29.7.0",
-    "jsdom": "^24.0.0",
-    "lightningcss": "^1.23.0",
-    "lint-staged": "^15.2.1",
-    "prettier": "^3.2.4",
-    "stylelint": "^16.2.1",
-    "ts-jest": "^29.1.2",
-    "typescript": "^5.3.3",
-    "vite": "^5.0.12",
-    "vite-plugin-externalize-deps": "^0.8.0"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+    "name": "react-component-library",
+    "version": "1.0.0",
+    "author": "{author.name}",
+    "description": "{package.description}",
+    "keywords": [],
+    "license": "MIT",
+    "readme": "README.md",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/{vendor.name}/{package.name}.git"
+    },
+    "type": "module",
+    "main": "dist/index.cjs",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs"
+        }
+    },
+    "files": [
+        "dist",
+        "dist/*.d.ts",
+        "dist/*.js",
+        "dist/*.cjs"
+    ],
+    "devDependencies": {
+        "@biomejs/biome": "^1.5.3",
+        "@happy-dom/jest-environment": "^13.3.8",
+        "@testing-library/jest-dom": "^6.4.1",
+        "@testing-library/react": "^14.2.1",
+        "@types/jest": "^29.5.12",
+        "@types/node": "^20.11.16",
+        "@types/react": "^18.2.51",
+        "@types/react-dom": "^18.2.18",
+        "@typescript-eslint/eslint-plugin": "^6.20.0",
+        "@typescript-eslint/parser": "^6.20.0",
+        "@vitejs/plugin-react": "^4.2.1",
+        "auto-changelog": "^2.4.0",
+        "dts-bundle-generator": "^9.2.5",
+        "eslint": "^8.56.0",
+        "eslint-plugin-jest": "^27.6.3",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-react": "^7.33.2",
+        "happy-dom": "^13.3.8",
+        "husky": "^9.0.10",
+        "jest": "^29.7.0",
+        "jsdom": "^24.0.0",
+        "lightningcss": "^1.23.0",
+        "lint-staged": "^15.2.1",
+        "prettier": "^3.2.4",
+        "stylelint": "^16.2.1",
+        "ts-jest": "^29.1.2",
+        "typescript": "^5.3.3",
+        "vite": "^5.0.12",
+        "vite-plugin-externalize-deps": "^0.8.0"
+    },
+    "peerDependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "lint-staged": {
+        "*.{js,ts,jsx,tsx}": [
+            "prettier --config prettier.config.cjs --write",
+            "biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true --skip-errors",
+            "eslint --config .eslintrc.cjs --fix"
+        ],
+        "*.{json,jsonc}": [
+            "prettier --config prettier.config.cjs --write"
+        ],
+        "*.{gql,graphql,html,md,mdx}": [
+            "prettier --config prettier.config.cjs --write"
+        ],
+        "*.{css,less,sass,scss}": [
+            "stylelint --config stylelint.config.mjs --fix",
+            "prettier --config prettier.config.cjs --write"
+        ],
+        "*.{yaml,yml}": [
+            "prettier --config prettier.config.cjs --tab-width 2 --write"
+        ]
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build && node scripts/build-types.js",
+        "preview": "vite preview",
+        "test": "jest --coverage --verbose",
+        "fmt": "biome format --no-errors-on-unmatched --files-ignore-unknown=true --skip-errors --write src tests && prettier --config prettier.config.cjs --write src tests",
+        "lint": "eslint --config .eslintrc.cjs --ext ts,js src/",
+        "lint:fix": "biome lint --apply --no-errors-on-unmatched --files-ignore-unknown=true --skip-errors src/ && eslint --config .eslintrc.cjs --ext ts,js --fix src/",
+        "lint:staged": "lint-staged --allow-empty",
+        "fix": "npm run fmt && npm run lint:fix",
+        "prepare": "husky install"
     }
-  },
-  "description": "{package.description}",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "files": [
-    "dist",
-    "dist/*.d.ts",
-    "dist/*.js",
-    "dist/*.cjs"
-  ],
-  "keywords": [],
-  "license": "MIT",
-  "lint-staged": {
-    "*.{js,ts,jsx,tsx}": [
-      "prettier --config prettier.config.cjs --write",
-      "biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true --skip-errors",
-      "eslint --config .eslintrc.cjs --fix"
-    ],
-    "*.{json,jsonc}": [
-      "prettier --config prettier.config.cjs --write"
-    ],
-    "*.{gql,graphql,html,md,mdx}": [
-      "prettier --config prettier.config.cjs --write"
-    ],
-    "*.{css,less,sass,scss}": [
-      "stylelint --config stylelint.config.mjs --fix",
-      "prettier --config prettier.config.cjs --write"
-    ],
-    "*.{yaml,yml}": [
-      "prettier --config prettier.config.cjs --tab-width 2 --write"
-    ]
-  },
-  "readme": "README.md",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build && node scripts/build-types.js",
-    "preview": "vite preview",
-    "test": "jest --coverage --verbose",
-    "fmt": "biome format --no-errors-on-unmatched --files-ignore-unknown=true --skip-errors --write src test && prettier --config prettier.config.cjs --write src test",
-    "lint": "eslint --config .eslintrc.cjs --ext ts,js src/",
-    "lint:fix": "biome lint --apply --no-errors-on-unmatched --files-ignore-unknown=true --skip-errors src/ && eslint --config .eslintrc.cjs --ext ts,js --fix src/",
-    "lint:staged": "lint-staged --allow-empty",
-    "fix": "npm run fmt && npm run lint:fix",
-    "prepare": "husky install"
-  },
-  "type": "module",
-  "types": "dist/index.d.ts"
 }
