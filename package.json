@@ -84,7 +84,7 @@
   "readme": "README.md",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/build-types.js",
     "preview": "vite preview",
     "test": "jest --coverage --verbose",
     "fmt": "biome format --no-errors-on-unmatched --files-ignore-unknown=true --skip-errors --write src test && prettier --config prettier.config.cjs --write src test",

@@ -1,3 +1,4 @@
+.cache/*
 dist/*
 scripts/*
 node_modules/*

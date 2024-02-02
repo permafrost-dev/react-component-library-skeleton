@@ -20,7 +20,7 @@ module.exports = {
             files: ['.eslintrc.cjs', '.eslintrc.js', 'jest.config.js'],
             rules: {
                 'sort-keys': 'off',
-                'array-element-newline': 'off', //['warn', { multiline: true, minItems: 6 }],
+                'array-element-newline': 'off',
             },
         },
     ],
@@ -61,5 +61,5 @@ module.exports = {
             },
         ],
     },
-    ignorePatterns: ['dist/*', 'node_modules/*', '.vscode/*', 'configure-package.js'],
+    ignorePatterns: ['dist/*', 'node_modules/*', '.vscode/*', '.cache/*', 'configure-package.js'],
 };

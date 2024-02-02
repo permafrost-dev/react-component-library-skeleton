@@ -4,13 +4,15 @@
 # Ignore all test and documentation with "export-ignore".
 /.editorconfig          export-ignore
 /.eslintignore          export-ignore
-/.eslintrc.cjs           export-ignore
+/.eslintrc.cjs          export-ignore
 /.gitattributes         export-ignore
 /.github                export-ignore
 /.gitignore             export-ignore
-/.madgerc               export-ignore
 /.prettierignore        export-ignore
-/jest.config.cjs         export-ignore
-/prettier.config.cjs     export-ignore
-/stylelint.config.mjs    export-ignore
+/biome.json             export-ignore
+/jest.config.cjs        export-ignore
+/prettier.config.cjs    export-ignore
+/stylelint.config.mjs   export-ignore
 /tests                  export-ignore
+/tsconfig.json          export-ignore
+/vite.config.js         export-ignore
