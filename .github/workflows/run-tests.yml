@@ -66,7 +66,7 @@ jobs:
           echo "CODECOV_SERVICE_ENABLED=$CODECOV_SERVICE_ENABLED" >> "$GITHUB_OUTPUT"
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.1.0
+        uses: codecov/codecov-action@v4.1.1
         if: ${{ steps.check-codecov.outputs.CODECOV_SERVICE_ENABLED == 'yes' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
