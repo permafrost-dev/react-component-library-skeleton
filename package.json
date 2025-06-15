@@ -46,7 +46,7 @@
         "eslint-plugin-react": "^7.33.2",
         "happy-dom": "^13.3.8",
         "husky": "^9.0.10",
-        "jest": "^29.7.0",
+        "jest": "^30.0.0",
         "jsdom": "^24.0.0",
         "lightningcss": "^1.23.0",
         "lint-staged": "^15.2.1",
